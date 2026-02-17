@@ -43,11 +43,11 @@ int main() {
         print_menu(selected);
         key = get_key();
         
-        if (key == 'U') {
+        if (key == 'Up') {
             selected--;
             if (selected < 1) selected = 12;
         }
-        else if (key == 'D') {
+        else if (key == 'Down') {
             selected++;
             if (selected > 12) selected = 1;
         }
@@ -157,8 +157,8 @@ int get_key() {
     
     if (ch == 224) {
         ch = getch();
-        if (ch == 72) return 'U';
-        if (ch == 80) return 'D';
+        if (ch == 72) return 'Up';
+        if (ch == 80) return 'Down';
         return ch;
     }
 }
@@ -212,7 +212,7 @@ void delete_structure() {
     printf("Список очищен\n");
 }
 
-// 3. Добавить элемент в конец (ЦИКЛИЧЕСКИЙ)
+// 3. Добавить элемент в конец 
 void add_end(double v1, char v2[]) {
     
     // Находим последний элемент
@@ -242,7 +242,7 @@ void add_end(double v1, char v2[]) {
     printf("Добавлено в конец: %g %s\n", v1, v2);
 }
 
-// 4. Добавить элемент в начало (ЦИКЛИЧЕСКИЙ)
+// 4. Добавить элемент в начало 
 void add_beg(double v1, char v2[]) {
     
     // Добавляем новый элемент
@@ -272,7 +272,7 @@ void add_beg(double v1, char v2[]) {
     printf("Добавлено в начало: %g %s\n", v1, v2);
 }
 
-// 5. Просмотр элементов (ЦИКЛИЧЕСКИЙ)
+// 5. Просмотр элементов 
 void read_elements() {
     if (head_index == -1) {
         printf("Список пуст\n");
@@ -299,7 +299,7 @@ int empty() {
     return (head_index == -1);
 }
 
-// 7. Определение количества элементов (ЦИКЛИЧЕСКИЙ)
+// 7. Определение количества элементов 
 int count() {
     if (head_index == -1) {
         return 0;
@@ -317,7 +317,7 @@ int count() {
     return k;
 }
 
-// 8. Поиск по двум полям (ЦИКЛИЧЕСКИЙ)
+// 8. Поиск по двум полям 
 int search_by_value(double v1, char v2[]) {
     int current = head_index;
     int start = head_index;
@@ -342,7 +342,7 @@ int search_by_value(double v1, char v2[]) {
     }
 }
 
-// 9. Поиск по первому полю (ЦИКЛИЧЕСКИЙ)
+// 9. Поиск по первому полю 
 void search_by_first_value(double v1) {
     if (head_index == -1) {
         printf("Список пуст\n");
@@ -368,7 +368,7 @@ void search_by_first_value(double v1) {
     }
 }
 
-// 10. Поиск по второму полю (ЦИКЛИЧЕСКИЙ)
+// 10. Поиск по второму полю 
 void search_by_second_value(char v2[]) {
     if (head_index == -1) {
         printf("Список пуст\n");
@@ -394,25 +394,8 @@ void search_by_second_value(char v2[]) {
     }
 }
 
-// 11. Удаление элемента (ЦИКЛИЧЕСКИЙ)
+// 11. Удаление элемента 
 void delete_element(double v1, char v2[]) {
-    if (head_index == -1) {
-        printf("Список пуст\n");
-        return;
-    }
-    
-    // Если список из одного элемента
-    if (nodes[head_index].next == &nodes[head_index]) {
-        if (nodes[head_index].data1 == v1 && strcmp(nodes[head_index].data2, v2) == 0) {
-            head_index = -1;
-            printf("Элемент удален (был единственным)\n");
-            return;
-        } else {
-            printf("Элемент не найден\n");
-            return;
-        }
-    }
-    
     // Поиск элемента для удаления
     int prev = -1;
     int current = head_index;
@@ -441,12 +424,12 @@ void delete_element(double v1, char v2[]) {
             printf("Элемент удален\n");
             break;
         }
-        
-        prev = current;
-        current = (int)(nodes[current].next - nodes);
-    } while (current != start && !found);
+        // Переходим к следующему элементу
+        prev = current; 
+        current = (int)(nodes[current].next - nodes); 
+    } while (current != start && !found); 
     
     if (!found) {
-        printf("Элемент не найден\n");
+        printf("Элемент не найден\n"); 
     }
 }
