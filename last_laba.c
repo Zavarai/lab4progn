@@ -14,6 +14,7 @@ typedef struct Node {
 Node nodes[1000];  // Фиксированный массив на 1000 элементов
 int node_count = 0; // Сколько реально используется
 int head_index = -1; // Индекс головы в массиве
+int empty_list = 0;
 
 // Функции
 void create_structure();
@@ -64,39 +65,49 @@ int main() {
                     break;
                     
                 case 3:
-                    printf("Введите значение (число): ");
-                    scanf("%lf", &value1);
-                    printf("Введите значение (строка): ");
-                    scanf("%s", value2);
-                    add_end(value1, value2);
+                    if (empty()) {
+                        printf("Списка нет, сначала создайте его (пункт 1)\n");
+                    } else {
+                        printf("Введите значение (число): ");
+                        scanf("%lf", &value1);
+                        printf("Введите значение (строка): ");
+                        scanf("%s", value2);
+                        add_end(value1, value2);
+                    }
                     break;
-                    
+
                 case 4:
-                    printf("Введите значение (число): ");
-                    scanf("%lf", &value1);
-                    printf("Введите значение (строка): ");
-                    scanf("%s", value2);
-                    add_beg(value1, value2);
+                    if (empty()) {
+                        printf("Списка нет, сначала создайте его (пункт 1)\n");
+                    } else {
+                        printf("Введите значение (число): ");
+                        scanf("%lf", &value1);
+                        printf("Введите значение (строка): ");
+                        scanf("%s", value2);
+                        add_beg(value1, value2);
+                    }
                     break;
-                    
                 case 5:
                     read_elements();
                     break;
                     
                 case 6:
                     if (empty())
-                        printf("Список пуст\n");
+                        printf("Списка нет, сначала создайте его (пункт 1)\n");
                     else
                         printf("Список не пуст\n");
                     break;
                     
                 case 7:
-                    printf("Количество элементов: %d\n", count());
+                    if (empty())
+                        printf("Списка нет, сначала создайте его (пункт 1)\n");
+                    else
+                        printf("Количество элементов: %d\n", count());
                     break;
                     
                 case 8:
                    if (empty()) {
-                       printf("Список пуст\n");
+                       printf("Списка нет, сначала создайте его (пункт 1)\n");
                    } else {
                       printf("Введите значение (число): ");
                        scanf("%lf", &value1);
@@ -108,7 +119,7 @@ int main() {
                     
                 case 9:
                     if (empty()) {
-                        printf("Список пуст\n");
+                        printf("Списка нет, сначала создайте его (пункт 1)\n");
                     } else {
                         printf("Введите значение (число): ");
                         scanf("%lf", &value1);
@@ -118,7 +129,7 @@ int main() {
                     
                 case 10:
                     if (empty()) {
-                        printf("Список пуст\n");
+                        printf("Списка нет, сначала создайте его (пункт 1)\n");
                     } else {
                         printf("Введите значение (строка): ");
                         scanf("%s", value2);
@@ -128,7 +139,7 @@ int main() {
                     
                 case 11:
                     if (empty()) {
-                        printf("Список пуст\n");
+                        printf("Списка нет, сначала создайте его (пункт 1)\n");
                     } else {
                         printf("Введите элемент (число) для удаления: ");
                         scanf("%lf", &value1);
@@ -190,26 +201,32 @@ void print_menu(int selected) {
         }
     }
     
-    printf("\nИспользуйте стрелки \u2191\u2193 для выбора, Enter - подтвердить\n");
+    printf("\nИспользуйте стрелки вверх/вниз для выбора, Enter - подтвердить\n");
     printf("Текущий размер списка: %d элементов\n", count());
 }
 
 // 1. Создание структуры
 void create_structure() {
-    if (head_index != -1) {
+    if (empty_list == 1) {
         printf("Список уже создан, для сначала удалите (пункт 2)\n");
     } else {
         node_count = 0;
         head_index = -1;
+        empty_list = 1;
         printf("Создан пустой циклический односвязный список\n");
     }
 }
 
 // 2. Удаление структуры
 void delete_structure() {
-    node_count = 0;
-    head_index = -1;
-    printf("Список очищен\n");
+    if (empty_list == 1) {
+        node_count = 0;
+        head_index = -1;
+        empty_list = 0;
+        printf("Список удалён\n");
+    } else {
+        printf("Списка нет, сначала создайте его (пункт 1)\n");
+    }
 }
 
 // 3. Добавить элемент в конец 
@@ -274,8 +291,8 @@ void add_beg(double v1, char v2[]) {
 
 // 5. Просмотр элементов 
 void read_elements() {
-    if (head_index == -1) {
-        printf("Список пуст\n");
+    if (empty_list == 0) {
+        printf("Списка нет, сначала создайте его (пункт 1)\n");
         return;
     }
     
@@ -296,7 +313,7 @@ void read_elements() {
 
 // 6. Определение пустоты
 int empty() {
-    return (head_index == -1);
+    return (empty_list == 0);
 }
 
 // 7. Определение количества элементов 
